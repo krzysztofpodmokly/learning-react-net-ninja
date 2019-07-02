@@ -1,26 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import Card from './Card';
+import { connect } from 'react-redux';
 
 class Home extends React.Component {
-    state = {
-        posts: []
-    }
-
-    componentDidMount() {
-        this.getPosts();
-    }
-
-    getPosts = async () => {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts')
-        this.setState({
-            posts: response.data.slice(0, 10)
-        })
-    }
-
     render() {
-        const { posts } = this.state;
-        console.log(posts)
+        console.log('HOME => ', this.props)
+        const { posts } = this.props.posts;
         const postList = posts.length ? posts.map(({id, body, title}) => {
             return <Card title={title} body={body} id={id} key={id}/>
         }) : (<div className="center">No posts yet</div>)
@@ -33,4 +18,10 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts
+    }
+}
+
+export default connect(mapStateToProps)(Home);

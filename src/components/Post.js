@@ -1,28 +1,11 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import PostDetail from './PostDetail';
 
 class Post extends React.Component {
-    state = {
-        post: null
-    }
-
-    componentDidMount() {
-        // console.log(this.props);
-        this.getPost();
-    }
-
-    getPost = async () => {
-        let id = this.props.match.params.post_id;
-        const response = await axios.get('https://jsonplaceholder.typicode.com/posts/' + id);
-        this.setState({
-            post: response.data
-        });
-    }
-
     render() {
-
-        const post = this.state.post ? (<PostDetail post={this.state.post} />) : (<div className="center">Loading post...</div>)
+        console.log('POST => ', this.props);
+        const post = this.props.post ? (<PostDetail post={this.props.post} deletePost={this.props.deletePost} history={this.props.history}/>) : (<div className="center">Loading post...</div>)
 
         return (
             <div className="container">
@@ -32,4 +15,17 @@ class Post extends React.Component {
     }
 }
 
-export default Post;
+const mapStateToProps = (state, ownProps) => {
+    let id = parseInt(ownProps.match.params.post_id);
+    return {
+        post: state.posts.posts.find(post => post.id === id)
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deletePost: (id) => { dispatch({ type: 'DELETE_POST', id: id }) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
