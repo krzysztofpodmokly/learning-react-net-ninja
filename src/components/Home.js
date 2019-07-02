@@ -21,8 +21,8 @@ class Home extends React.Component {
     render() {
         const { posts } = this.state;
         console.log(posts)
-        const postList = posts.length ? posts.map(post => {
-            return <Card post={post} key={post.id}/>
+        const postList = posts.length ? posts.map(({id, body, title}) => {
+            return <Card title={title} body={body} id={id} key={id}/>
         }) : (<div className="center">No posts yet</div>)
         return (
             <div className="container home">
