@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import Navbar from './Navbar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
@@ -23,5 +22,7 @@ class App extends React.Component {
                 </div>
             </BrowserRouter>
         );
+    }
+}
 
 export default App;
