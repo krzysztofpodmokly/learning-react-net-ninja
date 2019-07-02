@@ -18,7 +18,6 @@ class Post extends React.Component {
         this.setState({
             post: response.data
         });
-        console.log(this.state.post)
     }
 
     render() {
