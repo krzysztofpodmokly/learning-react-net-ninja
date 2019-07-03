@@ -2,6 +2,7 @@ import React from 'react';
 
 class PostDetail extends React.Component {
     handleClick = () => {
+        console.log('POST DETAIL => ', this.props)
         this.props.deletePost(this.props.post.id);
         this.props.history.push('/');
     }

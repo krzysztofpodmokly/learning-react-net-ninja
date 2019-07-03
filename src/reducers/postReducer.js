@@ -1,15 +1,15 @@
-const initState = {
-    posts: [
-        {id: 1, title: 'post no. 1', body: 'This is lorem ipsum'},
-        {id: 2, title: 'post no. 2', body: 'This is some random text'},
-        {id: 3, title: 'post no. 3', body: 'This text will be displayed'}
-    ]
-}
+import { FETCH_POSTS, DELETE_POST } from '../actions/types';
 
-const postReducer = (state = initState, action) => {
+// const initState = {
+//     posts: []
+// }
+
+const postReducer = (state = [], action) => {
     switch (action.type) {
-        case 'DELETE_POST':
-            return {...state, posts: state.posts.filter(post => action.id !== post.id)};
+        case FETCH_POSTS:
+            return action.payload;
+        case DELETE_POST:
+            return [...state, state.filter(post => action.payload !== post.id)];
         default:
             return state;
     }
