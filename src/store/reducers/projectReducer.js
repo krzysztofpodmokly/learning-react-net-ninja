@@ -6,12 +6,15 @@ const initState = {
     ]
   }
 
-const projectReducer = (state = initState, action) => {
+  // Additional parameters are coming from thunk.withExtraArguments => index.js
+const projectReducer = (state = initState, action, { getFirebase, getFirestore }) => {
     switch (action.type) {
       case 'CREATE_PROJECT':
         console.log('created project', action.payload);
+        break;
+      default:
+        return state;
     }
-    return state;
 }
 
 export default projectReducer;
