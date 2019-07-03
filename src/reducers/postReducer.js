@@ -1,9 +1,5 @@
 import { FETCH_POSTS, DELETE_POST } from '../actions/types';
 
-// const initState = {
-//     posts: []
-// }
-
 const postReducer = (state = [], action) => {
     switch (action.type) {
         case FETCH_POSTS:
