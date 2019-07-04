@@ -11,14 +11,21 @@ import dbConfig from './config/firebase';
 
 const store = createStore(reducers, 
     compose(
-        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore }))),
+        applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
         reduxFirestore(dbConfig),
-        reactReduxFirebase(dbConfig)
-    );
-
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
+        // 1. attaching firestore properties to firebase property
+        // 2. adding information to firebase property regarding auth status
+        reactReduxFirebase(dbConfig, {useFirestoreForProfile: true, userProfile: 'users', attachAuthIsReady: true})  
+    )
 );
+
+// Setting async function to get auth status first
+// Preventing from blinking content in the navbar when the user is logged in
+store.firebaseAuthIsReady.then(() => {
+    ReactDOM.render(
+        <Provider store={store}>
+            <App />
+        </Provider>,
+        document.getElementById('root')
+    );
+})
